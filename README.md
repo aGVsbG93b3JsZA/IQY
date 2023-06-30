@@ -1,7 +1,12 @@
-### 传入iqiyi播放页url，解析出视频m3u8文件
+# iqiyi视频逆向解析下载
+
+### 依赖项
+* Python依赖项：```pip install -r requirements.txt```
+* 其他：需安装好 [`NodeJs`](https://nodejs.org/en) 环境
+
 
 ***
-非登陆式：
+### 非登陆式：
 
 ```python
 from iqiyi import Iqiyi
@@ -16,15 +21,15 @@ iqiyi.get(url)
  
 ```
 ***
-登陆式
+### 登陆式
 
 * 在浏览器上手动登陆[`iqiyi`](https://www.iqiyi.com/)账号
 
-* 导出cookie，推荐使用浏览器插件[`EditThisCookie`](https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg)
+* 导出cookie，推荐使用Chrome浏览器插件[`EditThisCookie`](https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg)
 
-* （推荐）修改`cookie.conf`文件，将导出的 json 的格式覆盖保存
+* 修改`cookie.json`文件，将导出的 json 的格式覆盖保存
 
-* （推荐）调用 iqiyi.set_cookie()
+* 调用 `iqiyi.set_cookie()`
 
 ```python
 from iqiyi import Iqiyi
@@ -42,15 +47,17 @@ iqiyi.get(url=url)
   2. 修改文件`self.headers`,添加一行`'Cookie': 'your_cookie'`
 ***
 
-m3u8下载（如下为可选方案）
+### m3u8下载
 
 ```python
 from download import Downloader
 
-downloader = Downloader(m3_file)
-# 要求m3_file为m3u8文件的绝对路径，路径名为mac的方式
-# Windows可能需要对代码做相应的更改
+downloader = Downloader()
+
+# 导入m3u8文件路径
+downloader.load_file(filepath)
+
 # 基于协程下载
-downloader.download()
+downloader.download(save_name)
 
 ```
