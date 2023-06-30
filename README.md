@@ -25,9 +25,9 @@ iqiyi.get(url)
 
 * 在浏览器上手动登陆[`iqiyi`](https://www.iqiyi.com/)账号
 
-* 导出cookie，推荐使用Chrome浏览器插件[`EditThisCookie`](https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg)
+* 导出 cookie，推荐使用Chrome浏览器插件[`EditThisCookie`](https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg)
 
-* 清空`cookie.json`文件，将导出的 json 的格式覆盖保存
+* 清空`cookie.json`文件，将导出的 cookie 覆盖保存
 
 * 调用 `iqiyi.set_cookie()`
 
