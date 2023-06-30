@@ -27,7 +27,7 @@ iqiyi.get(url)
 
 * 导出cookie，推荐使用Chrome浏览器插件[`EditThisCookie`](https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg)
 
-* 修改`cookie.json`文件，将导出的 json 的格式覆盖保存
+* 清空`cookie.json`文件，将导出的 json 的格式覆盖保存
 
 * 调用 `iqiyi.set_cookie()`
 
