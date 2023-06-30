@@ -10089,8 +10089,7 @@ var func = function() {
 
 
 
-var func1 = func()
-var func2 = func1()
+var main = func()();
 
 
 

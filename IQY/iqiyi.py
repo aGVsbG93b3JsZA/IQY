@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import time
 from urllib.parse import urlencode
@@ -16,9 +17,9 @@ class Iqiyi:
         }
         self.session = requests.Session()
         self.session.headers = self.headers
-        self.params = {}
+        self.save_path = None
 
-    def set_cookie(self, file='cookie.conf'):
+    def set_cookie(self, file='cookie.json'):
         with open(file) as f:
             cookies = json.load(f)
         cookie_dict = {}
@@ -26,10 +27,12 @@ class Iqiyi:
             name = cookie["name"]
             value = cookie["value"]
             cookie_dict[name] = value
-        cj = cookiejar_from_dict(cookie_dict)
-        self.session.cookies = cj
+        cookie_jar = cookiejar_from_dict(cookie_dict)
+        self.session.cookies = cookie_jar
 
-    def get(self, url):
+    def get(self, url, save_path=None):
+        if save_path:
+            self.save_path = save_path
         with self.session.get(url) as resp:
             page = resp.text
         self.__parse_page(page)
@@ -43,7 +46,7 @@ class Iqiyi:
     def __get_vf(self, vf_input):
         with open('vf.js') as f:
             js = execjs.compile(f.read())
-            return js.call('func2', vf_input)
+            return js.call('main', vf_input)
 
     def __parse_page(self, page):
         pattern = r'window.QiyiPlayerProphetData=(.*?)</script>'
@@ -112,7 +115,13 @@ class Iqiyi:
         videos = result['data']['program']['video']
         for video in videos:
             if 'm3u8' in video:
-                with open(f'{self.title}.m3u8', mode='w') as f:
+                if self.save_path:
+                    self.file = self.save_path + '/' + self.title + '.m3u8'
+                else:
+                    self.save_path = self.title
+                    if not os.path.exists(self.save_path):
+                        os.mkdir(self.save_path)
+                    self.file = self.save_path + '/' + self.title + '.m3u8'
+                with open(self.file, mode='w') as f:
                     f.write(video['m3u8'])
                 break
-
